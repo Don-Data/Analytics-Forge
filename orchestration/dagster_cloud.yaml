@@ -1,6 +1,0 @@
-instance:
-  cloud:
-    api_url: https://api.dagster.cloud
-    token: ${DAGSTER_CLOUD_API_TOKEN}
-    project_name: prod
-    environment: production  # or dev, staging, etc.
