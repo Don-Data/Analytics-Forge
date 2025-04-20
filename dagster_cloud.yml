@@ -1,6 +1,6 @@
 instance:
   cloud:
     api_url: https://api.dagster.cloud
-    token: user:5ee5f18bd71347e580b4750f27fb2934
+    token: 5ee5f18bd71347e580b4750f27fb2934
     project_name: prod
     environment: production  # or dev, staging, etc.

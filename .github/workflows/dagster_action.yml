@@ -1,0 +1,30 @@
+name: Deploy to Dagster+
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Dagster Cloud CLI
+        run: pip install dagster-cloud
+
+      - name: Deploy to Dagster Cloud
+        run: |
+          cd orchestration
+          dagster-cloud deploy --project-file dagster_cloud.yaml
+        env:
+          DAGSTER_CLOUD_API_TOKEN: ${{ secrets.DAGSTER_CLOUD_API_TOKEN }}
