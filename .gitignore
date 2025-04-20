@@ -1,0 +1,5 @@
+.env
+
+orchestration/.venv/
+
+transformation/.venv/
