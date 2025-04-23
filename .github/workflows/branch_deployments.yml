@@ -31,7 +31,7 @@ jobs:
         uses: dagster-io/dagster-cloud-action/actions/utils/prerun@v0.1
 
       - name: Add project root to PYTHONPATH
-        run: echo "PYTHONPATH=$GITHUB_WORKSPACE/project-repo" >> $GITHUB_ENV
+        run: echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
 
       - name: Launch Docker Deploy
         if: steps.prerun.outputs.result == 'docker-deploy'

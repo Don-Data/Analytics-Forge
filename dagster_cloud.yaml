@@ -1,4 +1,4 @@
 locations:
   - code_source:
-      module_name: forge_orchestration.definitions
+      module_name: orchestration.forge_orchestration.definitions
     location_name: forge_orchestration
