@@ -41,6 +41,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
           path: project-repo
+          fetch-depth: 0
 
       - name: Python Executable Deploy
         if: steps.prerun.outputs.result == 'pex-deploy'
