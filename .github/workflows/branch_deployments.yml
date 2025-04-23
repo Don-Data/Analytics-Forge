@@ -14,6 +14,10 @@ env:
   PYTHON_VERSION: '3.10'
   DAGSTER_CLOUD_FILE: 'dagster_cloud.yaml'
 
+permissions:
+  pull-requests: write
+  contents: read
+
 jobs:
   dagster_cloud_default_deploy:
     name: Dagster Serverless Deploy
@@ -25,6 +29,9 @@ jobs:
       - name: Prerun Checks
         id: prerun
         uses: dagster-io/dagster-cloud-action/actions/utils/prerun@v0.1
+
+      - name: Add project root to PYTHONPATH
+        run: echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
 
       - name: Launch Docker Deploy
         if: steps.prerun.outputs.result == 'docker-deploy'
@@ -39,12 +46,13 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
           path: project-repo
+          fetch-depth: 0
 
       - name: Python Executable Deploy
         if: steps.prerun.outputs.result == 'pex-deploy'
         uses: dagster-io/dagster-cloud-action/actions/build_deploy_python_executable@v0.1
         with:
-          dagster_cloud_file: "$GITHUB_WORKSPACE/$DAGSTER_CLOUD_FILE"
+          dagster_cloud_file: "$GITHUB_WORKSPACE/project-repo/$DAGSTER_CLOUD_FILE"
           build_output_dir: "$GITHUB_WORKSPACE/build"
           python_version: "${{ env.PYTHON_VERSION }}"
         env:

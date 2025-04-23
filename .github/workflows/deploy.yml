@@ -9,6 +9,7 @@ concurrency:
   # Cancel in-progress deploys to same branch
   group: ${{ github.ref }}/deploy
   cancel-in-progress: true
+
 env:
   DAGSTER_CLOUD_URL: "http://dondata.dagster.cloud"
   DAGSTER_CLOUD_API_TOKEN: ${{ secrets.DAGSTER_CLOUD_API_TOKEN }}
@@ -28,6 +29,9 @@ jobs:
         id: prerun
         uses: dagster-io/dagster-cloud-action/actions/utils/prerun@v0.1
 
+      - name: Add project root to PYTHONPATH
+        run: echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+
       - name: Launch Docker Deploy
         if: steps.prerun.outputs.result == 'docker-deploy'
         id: parse-workspace
@@ -41,6 +45,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
           path: project-repo
+          fetch-depth: 0
 
       - name: Python Executable Deploy
         if: steps.prerun.outputs.result == 'pex-deploy'
