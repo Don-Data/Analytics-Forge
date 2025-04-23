@@ -1,5 +1,4 @@
 locations:
-- code_source:
-      python_file: project-repo/forge_orchestration/definitions.py 
-      working_directory: project-repo
-  location_name: forge_orchestration
+  - code_source:
+      module_name: forge_orchestration.definitions
+    location_name: forge_orchestration
